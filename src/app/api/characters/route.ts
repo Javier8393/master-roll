@@ -4,14 +4,15 @@ import { characters } from "@/db/schema";
 import { and, asc, desc, eq, like, type SQL } from "drizzle-orm";
 import { characterSchema, genderEnum, raceEnum } from "@/lib/validators";
 
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
 
-  const search = searchParams.get("search");
-  const sort = searchParams.get("sort") ?? "createdAt"; // name | age | createdAt
-  const dir = searchParams.get("dir") ?? "desc"; // asc | desc
-  const gender = searchParams.get("gender");
-  const race = searchParams.get("race");
+  const search = (url.searchParams.get("search") ?? "").trim();
+  const sort = url.searchParams.get("sort") ?? "createdAt"; // name | age | createdAt
+  const dir = url.searchParams.get("dir") ?? "desc"; // asc | desc
+  const gender = url.searchParams.get("gender");
+  const race = url.searchParams.get("race");
+
   const whereParts: SQL[] = [];
 
   if (search) whereParts.push(like(characters.name, `%${search}%`));
