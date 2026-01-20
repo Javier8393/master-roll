@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { db } from "@/db";
 import { characters } from "@/db/schema";
 import { and, asc, desc, eq, like, type SQL } from "drizzle-orm";
-import { characterSchema, genderEnum, raceEnum } from "@/lib/validators";
+import { characterSchema, genderEnum, raceEnum, characterClassEnum } from "@/lib/validators";
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
   const dir = url.searchParams.get("dir") ?? "desc"; // asc | desc
   const gender = url.searchParams.get("gender");
   const race = url.searchParams.get("race");
+  const characterClass = url.searchParams.get("characterClass");
 
   const whereParts: SQL[] = [];
 
@@ -25,6 +26,11 @@ export async function GET(req: NextRequest) {
   if (race) {
     const r = raceEnum.safeParse(race);
     if (r.success) whereParts.push(eq(characters.race, r.data));
+  }
+
+  if (characterClass) {
+    const c = characterClassEnum.safeParse(characterClass);
+    if (c.success) whereParts.push(eq(characters.characterClass, c.data));
   }
 
   const where = whereParts.length ? and(...whereParts) : undefined;
@@ -62,4 +68,44 @@ export async function POST(req: NextRequest) {
     .returning();
 
   return NextResponse.json(inserted[0], { status: 201 });
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const characterId = parseInt(id);
+
+  if (isNaN(characterId)) {
+    return NextResponse.json(
+      { message: "ID inválido" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const deleted = await db
+      .delete(characters)
+      .where(eq(characters.id, characterId))
+      .returning();
+
+    if (!deleted.length) {
+      return NextResponse.json(
+        { message: "Personaje no encontrado" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Personaje eliminado" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json(
+      { message: "Error al eliminar" },
+      { status: 500 }
+    );
+  }
 }

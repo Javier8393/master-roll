@@ -7,6 +7,7 @@ export const characters = sqliteTable("characters", {
   age: integer("age").notNull(),
   gender: text("gender", { enum: ["male", "female"] }).notNull(),
   race: text("race", { enum: ["human", "elf", "dwarf", "gnome"] }).notNull(),
+  characterClass: text("character_class", { enum: ["warrior", "mage", "rogue", "cleric"] }).notNull(),
   description: text("description").notNull(),
 
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
