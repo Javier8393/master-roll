@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trash2, Loader2 } from "lucide-react";
 
 type Props = {
   characterId: number;
@@ -37,9 +38,10 @@ export function Delete({ characterId, characterName, onDeleted }: Props) {
     <button
       onClick={handleDelete}
       disabled={loading}
-      className="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition disabled:opacity-50"
+      className="px-3 py-2 rounded-lg border-2 border-red-500 bg-red-500 text-white font-medium hover:bg-red-600 hover:border-red-600 disabled:bg-gray-400 disabled:border-gray-400"
+      title="Eliminar"
     >
-      {loading ? "..." : "✕"}
+      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
     </button>
   );
 }

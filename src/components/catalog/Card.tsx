@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Delete from "./Delete";
+import Favourite from "./Favourite";
 import { Character } from "@/components/dashboard/Catalog";
-// import Delete from "@/components/catalog/Delete";
-// import Favourite from "@/components/catalog/Favourite";
 
 // Traducciones
 const genderLabels: Record<string, string> = {
@@ -45,54 +45,72 @@ const raceColors: Record<string, string> = {
   gnome: "bg-violet-100 text-violet-700",
 };
 
+// Estilos base
+const cardStyles = {
+  container: "border-2 border-gray-200 rounded-xl p-5 bg-white hover:border-blue-300 hover:shadow-md transition-all",
+  header: "flex justify-between items-center mb-3",
+  title: "font-bold text-xl text-gray-800",
+  age: "text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded",
+  badges: "flex flex-wrap gap-2 mb-4",
+  badge: "px-3 py-1 text-xs font-medium rounded-full",
+  description: "text-sm text-gray-600 mb-5 leading-relaxed",
+  actions: "flex gap-2 pt-3 border-t border-gray-100",
+  buttonPrimary: "flex-1 text-center px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700",
+} as const;
+
 type Props = {
   character: Character;
   onDeleted: () => void;
+  onFavouriteChanged?: () => void;
 };
 
-export function Card({ character, onDeleted }: Props) {
+export function Card({ character, onDeleted, onFavouriteChanged }: Props) {
   return (
-    <article className="rounded border p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+    <article className={cardStyles.container}>
       {/* Header: Nombre y edad */}
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <h2 className="font-semibold text-gray-900 text-lg">{character.name}</h2>
-        <span className="text-sm text-gray-500">{character.age} años</span>
+      <div className={cardStyles.header}>
+        <h2 className={cardStyles.title}>{character.name}</h2>
+        <span className={cardStyles.age}>{character.age} años</span>
       </div>
 
-      {/* Género, Raza y Clase en la misma línea */}
-      <div className="flex flex-wrap gap-2 mb-3">
-        <span className={`inline-block px-2 py-1 text-xs rounded ${genderColors[character.gender] || "bg-gray-100 text-gray-700"}`}>
+      {/* Género, Raza y Clase */}
+      <div className={cardStyles.badges}>
+        <span className={`${cardStyles.badge} ${genderColors[character.gender] || "bg-gray-100 text-gray-700"}`}>
           {genderLabels[character.gender] || character.gender}
         </span>
-        <span className={`inline-block px-2 py-1 text-xs rounded ${raceColors[character.race] || "bg-gray-100 text-gray-700"}`}>
+        <span className={`${cardStyles.badge} ${raceColors[character.race] || "bg-gray-100 text-gray-700"}`}>
           {raceLabels[character.race] || character.race}
         </span>
-        <span className={`inline-block px-2 py-1 text-xs rounded ${classColors[character.characterClass] || "bg-gray-100 text-gray-700"}`}>
+        <span className={`${cardStyles.badge} ${classColors[character.characterClass] || "bg-gray-100 text-gray-700"}`}>
           {classLabels[character.characterClass] || character.characterClass}
         </span>
       </div>
 
       {/* Descripción */}
-      <p className="text-sm text-gray-700 line-clamp-3 mb-4">
+      <p className={cardStyles.description}>
         {character.description}
       </p>
 
       {/* Acciones */}
-      <div className="flex gap-2 text-sm">
+      <div className={cardStyles.actions}>
         <Link
           href={`/characters/${character.id}`}
-          className="flex-1 text-center px-3 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition"
+          className={cardStyles.buttonPrimary}
         >
           Ver
         </Link>
 
-        {/*<Favourite characterId={character.id} />*/}
+        {<Favourite 
+          characterId={character.id} 
+          initialFavourite={character.isFavourite === 1}
+          onFavouriteChanged={onFavouriteChanged}
+        />}
 
-        {/*<Delete
+        {<Delete
           characterId={character.id}
           characterName={character.name}
           onDeleted={onDeleted}
-        />*/}
+        />}
       </div>
 
       {/* Metadata 

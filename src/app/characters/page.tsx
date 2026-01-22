@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { headers } from "next/headers";
+import { Swords, Plus } from "lucide-react";
 import Catalog from "@/components/dashboard/Catalog";
 
 type SearchParams = Record<string, string | string[] | undefined>;
@@ -23,6 +24,7 @@ export default async function CharactersPage({
   const characterClass = (getParam(sp, "characterClass") ?? "") as "" | "mage" | "rogue" | "warrior";
   const sort = (getParam(sp, "sort") ?? "createdAt") as "createdAt" | "name" | "age";
   const dir = (getParam(sp, "dir") ?? "desc") as "asc" | "desc";
+  const isFavourite = (getParam(sp, "isFavourite") ?? "") as "" | "true" | "false";
 
   // Construir query string
   const qs = new URLSearchParams();
@@ -30,9 +32,10 @@ export default async function CharactersPage({
   if (gender) qs.set("gender", gender);
   if (race) qs.set("race", race);
   if (characterClass) qs.set("characterClass", characterClass);
+  if (isFavourite) qs.set("isFavourite", isFavourite);
   qs.set("sort", sort);
   qs.set("dir", dir);
-
+  
   // Obtener datos
   const h = await headers();
   const host = h.get("host");
@@ -54,22 +57,29 @@ export default async function CharactersPage({
   const characters = await res.json();
 
   return (
-    <main className="p-6 space-y-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Personajes</h1>
+    <div className="h-full flex flex-col">
+      <header className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+            <Swords className="w-8 h-8" /> Personajes
+          </h1>
+          <p className="text-gray-500 mt-1">Gestiona tu colección de héroes</p>
+        </div>
         <Link 
           href="/characters/new"
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          className="px-5 py-2.5 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 flex items-center gap-2"
         >
-          + Nuevo
+          <Plus className="w-5 h-5" /> Nuevo personaje
         </Link>
       </header>
 
-      {/* Un solo componente que lo maneja todo */}
-      <Catalog 
-        initialCharacters={characters}
-        initialFilters={{ search, gender, race, characterClass, sort, dir }}
-      />
-    </main>
+      {/* Catálogo con altura flexible */}
+      <div className="flex-1 min-h-0">
+        <Catalog 
+          initialCharacters={characters}
+          initialFilters={{ search, gender, race, characterClass, isFavourite, sort, dir }}
+        />
+      </div>
+    </div>
   );
 }

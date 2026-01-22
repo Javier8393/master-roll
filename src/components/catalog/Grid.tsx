@@ -6,9 +6,10 @@ import { Character } from "@/components/dashboard/Catalog";
 type Props = {
   characters: Character[];
   onDeleted: () => void;
+  onFavouriteChanged?: () => void;
 };
 
-export function Grid({ characters, onDeleted }: Props) {
+export function Grid({ characters, onDeleted, onFavouriteChanged }: Props) {
   // Si no hay personajes
   if (characters.length === 0) {
     return (
@@ -20,12 +21,13 @@ export function Grid({ characters, onDeleted }: Props) {
 
   // Renderizar grid de tarjetas
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {characters.map((character) => (
         <Card
           key={character.id}
           character={character}
           onDeleted={onDeleted}
+          onFavouriteChanged={onFavouriteChanged}
         />
       ))}
     </div>

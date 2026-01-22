@@ -10,6 +10,8 @@ export const characters = sqliteTable("characters", {
   characterClass: text("character_class", { enum: ["warrior", "mage", "rogue", "cleric"] }).notNull(),
   description: text("description").notNull(),
 
+  isFavourite: integer().notNull().default(0),
+
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
 });
