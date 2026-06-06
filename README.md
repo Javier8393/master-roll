@@ -1,60 +1,60 @@
 # Master Roll
 
-Web application for managing tabletop RPG campaigns.
+Aplicación web para gestionar campañas de rol de mesa.
 
-## Tech Stack
+## Stack tecnológico
 
 - **Backend:** Python, Django 5.2, Django REST Framework, PostgreSQL
 - **Frontend:** React, TypeScript, Vite, Tailwind CSS
-- **Infrastructure:** Docker, Docker Compose
+- **Infraestructura:** Docker, Docker Compose
 
-## Requirements
+## Requisitos
 
-- Docker and Docker Compose
-- Python 3.12 (for local development without Docker)
-- pnpm (for local frontend development without Docker)
+- Docker y Docker Compose
+- Python 3.12 (para desarrollo local sin Docker)
+- pnpm (para desarrollo local del frontend sin Docker)
 
-## Getting Started
+## Primeros pasos
 
-### 1. Clone the repository
+### 1. Clonar el repositorio
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Javier8393/master-roll.git
 cd master-roll
 ```
 
-### 2. Configure environment variables
+### 2. Configurar las variables de entorno
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and set a secure `DJANGO_SECRET_KEY`.
+Edita el archivo `.env` y rellena los valores reales, especialmente `DJANGO_SECRET_KEY`.
 
-### 3. Start with Docker
+### 3. Arrancar con Docker
 
 ```bash
 docker-compose up --build
 ```
 
-| Service  | URL                    |
-|----------|------------------------|
-| Backend  | http://localhost:8000  |
-| Frontend | http://localhost:5173  |
-| Database | localhost:5432         |
+| Servicio  | URL                    |
+|-----------|------------------------|
+| Backend   | http://localhost:8000  |
+| Frontend  | http://localhost:5173  |
+| Base de datos | localhost:5432     |
 
-## Project Structure
+## Estructura del proyecto
 
 ```
 master-roll/
-├── backend/        # Django REST API
-├── frontend/       # React + TypeScript app
-├── docs/           # Project documentation
+├── backend/        # API REST con Django
+├── frontend/       # Aplicación React + TypeScript
+├── docs/           # Documentación del proyecto
 └── docker-compose.yml
 ```
 
-## Documentation
+## Documentación
 
-- [Project Definition](docs/project-definition.md)
-- [Database Design](docs/database-design.md)
-- [Development Roadmap](docs/development-roadmap.md)
+- [Definición del proyecto](docs/project-definition.md)
+- [Diseño de base de datos](docs/database-design.md)
+- [Hoja de ruta](docs/development-roadmap.md)
