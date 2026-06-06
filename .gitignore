@@ -1,0 +1,45 @@
+# ─── Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+staticfiles/
+media/
+
+# ─── Node ─────────────────────────────────────────────────
+node_modules/
+dist/
+.pnpm-debug.log*
+
+# ─── Environment variables ────────────────────────────────
+# NEVER commit .env files — they contain secrets
+.env
+.env.local
+.env.*.local
+
+# ─── Docker ───────────────────────────────────────────────
+# Nothing specific, but keep this section for future use
+
+# ─── IDE ──────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── OS ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
