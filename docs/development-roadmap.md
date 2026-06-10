@@ -38,13 +38,21 @@ A complete project blueprint ready for implementation.
 
 * Create Git repository.
 * Create project folder structure.
-* Create backend structure.
-* Create frontend structure.
-* Configure Python environment.
+* Configure Python environment and virtual env.
 * Configure pnpm.
-* Configure Docker.
-* Configure PostgreSQL.
 * Configure environment variables.
+* Create Django project skeleton.
+* Configure Django settings (PostgreSQL, DRF, CORS, environ).
+* Create initial Django apps.
+* Confirm backend health endpoint (`/api/v1/health/`).
+* Configure pytest and pytest-django.
+* Create React project skeleton with Vite.
+* Configure TypeScript.
+* Configure Tailwind CSS.
+* Configure React Router.
+* Configure Axios.
+* Configure Docker and Docker Compose.
+* Verify full stack runs with `docker-compose up`.
 
 ## Deliverables
 
@@ -54,10 +62,13 @@ A complete project blueprint ready for implementation.
 * `docker-compose.yml`
 * `backend/Dockerfile`
 * `frontend/Dockerfile`
+* `backend/config/settings.py`
+* `backend/pytest.ini`
+* `frontend/` (React + Vite project)
 
 ## Result
 
-The project starts correctly in local development.
+The full stack (Django + PostgreSQL + React) starts correctly with `docker-compose up`. The health endpoint responds and the frontend serves the base app.
 
 ---
 
@@ -198,18 +209,15 @@ Players can create and manage playable characters.
 
 ---
 
-# Phase 9 — Frontend Base
+# Phase 9 — Frontend Authentication UI
 
 ## Objectives
 
-* Create React project with Vite.
-* Configure TypeScript.
-* Configure Tailwind CSS.
-* Configure React Router.
-* Configure Axios.
 * Create base layout.
-* Create login and register pages.
+* Create login page.
+* Create register page.
 * Connect frontend with authentication API.
+* Store JWT tokens and handle session.
 
 ## Result
 
